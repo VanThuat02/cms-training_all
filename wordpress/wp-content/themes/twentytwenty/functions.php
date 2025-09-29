@@ -399,40 +399,75 @@ add_action('wp_body_open', 'twentytwenty_skip_link', 5);
  */
 function twentytwenty_sidebar_registration()
 {
-
-	// Arguments used in all register_sidebar() calls.
 	$shared_args = array(
-		'before_title' => '<h2 class="widget-title subheading heading-size-3">',
-		'after_title' => '</h2>',
-		'before_widget' => '<div class="widget %2$s"><div class="widget-content">',
-		'after_widget' => '</div></div>',
+		'name' => esc_html__('Footer #', 'twentytwenty'),
+		'id' => 'sidebar-1',
+		'description' => esc_html__('Add widgets in this area will be displayed in the footer.', 'twentytwenty'),
+		'before_title' => '<h5 class="widget-title">',
+		'after_title' => '</h5>',
+		'before_widget' => '<div class="widget %2$s">',
+		'after_widget' => '</div>',
 	);
 
-	// Footer #1.
+	// Footer Sidebars #1
 	register_sidebar(
 		array_merge(
 			$shared_args,
 			array(
 				'name' => __('Footer #1', 'twentytwenty'),
 				'id' => 'sidebar-1',
-				'description' => __('Widgets in this area will be displayed in the first column in the footer.', 'twentytwenty'),
+				'description' => __('Widgets in this area will be displayed in the 1 column in the footer.', 'twentytwenty'),
 			)
 		)
 	);
-
-	// Footer #2.
+	// Footer Sidebars #2
 	register_sidebar(
 		array_merge(
 			$shared_args,
 			array(
 				'name' => __('Footer #2', 'twentytwenty'),
 				'id' => 'sidebar-2',
-				'description' => __('Widgets in this area will be displayed in the second column in the footer.', 'twentytwenty'),
+				'description' => __('Widgets in this area will be displayed in the 2 column in the footer.', 'twentytwenty'),
+			)
+		)
+	);
+	// Footer Sidebars #3
+	register_sidebar(
+		array_merge(
+			$shared_args,
+			array(
+				'name' => __('Footer #3', 'twentytwenty'),
+				'id' => 'sidebar-3',
+				'description' => __('Widgets in this area will be displayed in the 3 column in the footer.', 'twentytwenty'),
+			)
+		)
+	);
+
+
+	// Sidebar 4: Social
+	register_sidebar(
+		array_merge(
+			$shared_args,
+			array(
+				'name' => __('Footer Social', 'twentytwenty'),
+				'id' => 'sidebar-4',
+				'description' => __('Widgets for social links.', 'twentytwenty'),
+			)
+		)
+	);
+
+	// Sidebar 5: Copyright
+	register_sidebar(
+		array_merge(
+			$shared_args,
+			array(
+				'name' => __('Footer Copyright', 'twentytwenty'),
+				'id' => 'sidebar-5',
+				'description' => __('Widgets for copyright info.', 'twentytwenty'),
 			)
 		)
 	);
 }
-
 add_action('widgets_init', 'twentytwenty_sidebar_registration');
 
 /**
