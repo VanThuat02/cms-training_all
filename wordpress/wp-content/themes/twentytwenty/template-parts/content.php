@@ -28,26 +28,28 @@ if (!is_single()) {
 
 	?>
 
-	<div class="post-inner <?php echo is_page_template('templates/template-full-width.php') ? '' : 'thin'; ?> ">
+	<div class="post-inner <?php echo is_page_template('templates/template-full-width.php') ? '' : 'thin'; ?>">
 
 		<div class="entry-content">
 
 			<?php
-			if (is_search() || !is_singular() && 'summary' === get_theme_mod('blog_content', 'full')) {
+			if (is_search() || (!is_singular() && 'summary' === get_theme_mod('blog_content', 'full'))) {
 				the_excerpt();
-			}
-			if (is_single()) {
+			} elseif (is_single()) {
 				the_content(__('Continue reading', 'twentytwenty'));
 			} else {
-				$post = get_post();
-				echo substr($post->post_content, 0, 100);
+				// Hiện danh sách bài viết giới hạn 30 từ
+				echo wp_trim_words(get_the_content(), 30, '...');
+				?>
+				<a class="read-more" href="<?php the_permalink(); ?>">Xem thêm »</a>
+				<?php
 			}
-
 			?>
 
 		</div><!-- .entry-content -->
 
 	</div><!-- .post-inner -->
+
 
 	<div class="section-inner">
 		<?php
