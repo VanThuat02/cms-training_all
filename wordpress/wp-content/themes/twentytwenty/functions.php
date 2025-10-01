@@ -878,18 +878,20 @@ function twentytwenty_get_elements_array()
 /**
  * Enqueue scripts and styles.
  */
-function enqueue_custom_assets()
-{
-	// Bootstrap CSS
-	wp_enqueue_style('bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
-	// Font Awesome CSS
-	wp_enqueue_style('font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-	// Bootstrap JS (phụ thuộc jQuery)
-	wp_enqueue_script('jquery');
-	wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), null, true);
-	// CSS tùy chỉnh cho footer
-	wp_add_inline_style('bootstrap-css', '@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"); section { padding: 30px 0; } section .section-title { text-align: center; color: #007b5e; margin-bottom: 20px; text-transform: uppercase; font-size: 18px; } #footer { background: #007b5e !important; } #footer h5 { padding-left: 8px; border-left: 2px solid #eeeeee; padding-bottom: 4px; margin-bottom: 15px; color: #ffffff; font-size: 16px; } #footer a { color: #ffffff; text-decoration: none !important; background-color: transparent; -webkit-text-decoration-skip: objects; } #footer ul.social li { padding: 2px 0; } #footer ul.social li a i { margin-right: 3px; font-size: 20px; -webkit-transition: .5s all ease; -moz-transition: .5s all ease; transition: .5s all ease; } #footer ul.social li:hover a i { font-size: 22px; margin-top: -5px; } #footer ul.social li a, #footer ul.quick-links li a { color: #ffffff; font-size: 14px; } #footer ul.social li a:hover { color: #eeeeee; } #footer ul.quick-links li { padding: 2px 0; -webkit-transition: .5s all ease; -moz-transition: .5s all ease; transition: .5s all ease; } #footer ul.quick-links li:hover { padding: 2px 0; margin-left: 3px; font-weight: 700; } #footer ul.quick-links li a i { margin-right: 3px; } #footer ul.quick-links li:hover a i { font-weight: 700; } @media (max-width: 767px) { #footer h5 { padding-left: 0; border-left: transparent; padding-bottom: 0px; margin-bottom: 8px; font-size: 14px; } #footer ul.social li a i { font-size: 18px; } #footer ul.social li:hover a i { font-size: 20px; } #footer ul.quick-links li a { font-size: 12px; } }');
-	wp_add_inline_style('bootstrap-css', '@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"); #site-footer.footer { background: #007b5e !important; } #site-footer.footer h5 { padding-left: 10px; border-left: 3px solid #eeeeee; padding-bottom: 6px; margin-bottom: 20px; color: #ffffff; } #site-footer.footer a { color: #ffffff; text-decoration: none !important; } #site-footer.footer ul.social li { padding: 3px 0; } #site-footer.footer ul.social li a i { margin-right: 5px; font-size: 25px; -webkit-transition: .5s all ease; -moz-transition: .5s all ease; transition: .5s all ease; } #site-footer.footer ul.social li:hover a i { font-size: 30px; margin-top: -10px; } #site-footer.footer ul.social li a:hover { color: #eeeeee; } #site-footer.footer ul.quick-links li { padding: 3px 0; -webkit-transition: .5s all ease; -moz-transition: .5s all ease; transition: .5s all ease; } #site-footer.footer ul.quick-links li:hover { margin-left: 5px; font-weight: 700; } #site-footer.footer ul.quick-links li a i { margin-right: 5px; } #site-footer.footer ul.quick-links li:hover a i { font-weight: 700; } @media (max-width: 767px) { #site-footer.footer h5 { padding-left: 0; border-left: transparent; padding-bottom: 0px; margin-bottom: 10px; } }');
 
+function twentytwenty_child_enqueue_styles()
+{
+	// Enqueue parent theme's style
+	wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+	// Enqueue child theme's style
+	wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/style.css', array('parent-style'), '1.0.0');
+	// Enqueue Bootstrap CSS
+	wp_enqueue_style('bootstrap-css', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', array(), '4.0.0');
+	// Enqueue Font Awesome CSS
+	wp_enqueue_style('font-awesome', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', array(), '4.7.0');
+	// Enqueue jQuery
+	wp_enqueue_script('jquery');
+	// Enqueue Bootstrap JS
+	wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), '4.0.0', true);
 }
-add_action('wp_enqueue_scripts', 'enqueue_custom_assets');
+add_action('wp_enqueue_scripts', 'twentytwenty_child_enqueue_styles');
