@@ -895,3 +895,26 @@ function twentytwenty_child_enqueue_styles()
 	wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), '4.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'twentytwenty_child_enqueue_styles');
+
+function custom_posts_per_page($query)
+{
+	if (!is_admin() && $query->is_main_query() && $query->is_home()) {
+		$query->set('posts_per_page', 2);
+	}
+}
+add_action('pre_get_posts', 'custom_posts_per_page');
+
+// Giới hạn excerpt mặc định
+function custom_excerpt_length($length)
+{
+	return 30; // số từ
+}
+add_filter('excerpt_length', 'custom_excerpt_length', 999);
+
+// Thêm "Xem thêm" vào excerpt
+function custom_excerpt_more($more)
+{
+	return '... <a class="read-more" href="' . get_permalink() . '">Xem thêm »</a>';
+}
+add_filter('excerpt_more', 'custom_excerpt_more');
+
