@@ -4178,7 +4178,7 @@ div.comment:first-of-type {
 /* Widget Base ------------------------------- */
 
 .widget {
-	margin-top: 3rem;
+	/* margin-top: 3rem; */
 }
 
 .widget:first-child {
@@ -6934,7 +6934,7 @@ a.to-the-top>* {
 	height: max-content;
 	color: #222;
 	background: #f8f8f8;
-	
+
 
 }
 
@@ -7097,6 +7097,7 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 .header-inner {
 	padding: 1.8rem 0;
 }
+
 /* --- Cấu hình chung cho bài viết chi tiết để giới hạn chiều rộng và căn giữa --- */
 .single article.post {
 	margin-left: auto;
@@ -7280,6 +7281,7 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 .single .single-post-content-wrapper .entry-content a:hover {
 	text-decoration: underline;
 }
+
 /* Định dạng đoạn trích (nếu có) */
 /* === Pagination dạng list (giống ảnh mẫu) === */
 .pagination-single-inner.list-style {
@@ -7296,7 +7298,8 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	color: #000;
 	font-family: 'Segoe UI', sans-serif;
 	padding: 5px 0;
-	border: 1px dashed transparent; /* chỉ để debug, có thể bỏ */
+	border: 1px dashed transparent;
+	/* chỉ để debug, có thể bỏ */
 }
 
 .pagination-single-inner.list-style .pagination-item:hover .title {
@@ -7346,3 +7349,111 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	line-height: 1.4;
 	color: #000;
 }
+
+.layout-wrapper {
+	display: grid;
+	grid-template-columns: 1fr 2fr 1fr;
+	gap: 20px;
+	padding: 20px;
+}
+
+.sidebar-left,
+.sidebar-right {
+	background: #f9f9f9;
+	padding: 15px;
+	border-radius: 8px;
+}
+
+.widget-title {
+	font-weight: bold;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	border-bottom: 2px solid #ddd;
+	padding-bottom: 5px;
+}
+
+.post-inner {
+	background: #fff;
+	padding: 15px;
+	border-radius: 8px;
+}
+
+.post-navigation-wrapper {
+	margin-top: 30px;
+	padding: 15px;
+	background: #f0f0f0;
+	border-radius: 8px;
+	text-align: center;
+}
+
+.comments-wrapper {
+	margin-top: 30px;
+}
+
+@media (max-width: 768px) {
+	.layout-wrapper {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ====== Categories Box ====== */
+.widget-categories {
+  background: #fff url('https://www.transparenttextures.com/patterns/subtle-dots.png'); /* họa tiết nhẹ nền xám */
+  border: 1px solid #e6e6e6;
+  padding: 20px 18px;
+  border-radius: 4px;
+}
+
+.widget-categories .widget-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  border-bottom: 4px solid #f4f4f4;
+  padding-bottom: 4px;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* Danh sách category */
+.widget-categories ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.widget-categories ul li {
+  position: relative;
+  padding: 8px 0 8px 18px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.widget-categories ul li:last-child {
+  border-bottom: none;
+}
+
+/* Dấu chấm vàng trước mỗi dòng */
+.widget-categories ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #f9c400;
+  font-size: 20px;
+  line-height: 1;
+  top: 4px;
+}
+
+/* Liên kết */
+.widget-categories ul li a {
+  color: #3399cc;
+  text-decoration: none;
+  font-size: 15px;
+  transition: color 0.2s ease;
+}
+
+.widget-categories ul li a:hover {
+  color: #0073aa;
+}
+
+
+
+
