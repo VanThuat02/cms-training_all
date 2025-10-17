@@ -475,7 +475,7 @@ function twentytwenty_sidebar_registration()
 			array(
 				'name' => __('Categories #9', 'twentytwenty'),
 				'id' => 'sidebar-9',
-				'description' => __('Widgets in this area will be displayed in the 1 column in the footer.', 'twentytwenty'),
+				'description' => __('Widgets in this area will be displayed in the 9 column in the footer.', 'twentytwenty'),
 			)
 		)
 	);
@@ -487,10 +487,25 @@ function twentytwenty_sidebar_registration()
 			array(
 				'name' => __('Categories #10', 'twentytwenty'),
 				'id' => 'sidebar-10',
-				'description' => __('Widgets in this area will be displayed in the 1 column in the footer.', 'twentytwenty'),
+				'description' => __('Widgets in this area will be displayed in the 10 column in the footer.', 'twentytwenty'),
 			)
 		)
 	);
+
+	// Module #11
+	register_sidebar(
+		array_merge(
+			$shared_args,
+			array(
+				'name' => __('Archive #11', 'twentytwenty'),
+				'id' => 'sidebar-11',
+				'description' => __('Widgets in this area will be displayed in the archive sidebar (latest posts fallback if empty).', 'twentytwenty'),
+				'class' => 'latest-widget-area',  // Custom class cho CSS
+				'before_widget' => '<div class="widget latest-posts-widget %2$s">',  // Custom cho widget này
+			)
+		)
+	);
+
 
 
 }
@@ -944,3 +959,173 @@ function custom_excerpt_more($more)
 }
 add_filter('excerpt_more', 'custom_excerpt_more');
 
+// 
+
+
+
+// Thêm vào functions.php của theme
+
+// Đăng ký custom widget cho Latest Posts Sidebar (có thể chỉnh sửa trong WP Admin > Appearance > Widgets)
+class Latest_Posts_Sidebar_Widget extends WP_Widget
+{
+
+	// Constructor
+	public function __construct()
+	{
+		$widget_ops = array(
+			'classname' => 'latest_posts_sidebar_widget',
+			'description' => __('Hiển thị danh sách bài viết mới nhất chia 2 cột, với số thứ tự, badge comment và nút Xem nhiều. Có thể chỉnh số lượng bài và tiêu đề.', 'twentytwenty'),
+		);
+		parent::__construct(
+			'latest_posts_sidebar_widget',
+			__('Latest Posts Sidebar (2 Cột)', 'twentytwenty'),
+			$widget_ops
+		);
+	}
+
+	// Output HTML của widget
+	public function widget($args, $instance)
+	{
+		// Lấy options từ instance
+		$title = !empty($instance['title']) ? $instance['title'] : 'Xem mới';
+		$num_posts = !empty($instance['num_posts']) ? absint($instance['num_posts']) : 8;
+
+		echo $args['before_widget'];
+
+		// Title
+		if (!empty($instance['title'])) {
+			echo $args['before_title'] . apply_filters('widget_title', $title) . $args['after_title'];
+		}
+
+		// Gọi function hiển thị latest posts (với param số lượng)
+		display_latest_posts_sidebar_custom($title, $num_posts);
+
+		echo $args['after_widget'];
+	}
+
+	// Form chỉnh sửa trong WP Admin
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Xem mới';
+		$num_posts = !empty($instance['num_posts']) ? absint($instance['num_posts']) : 8;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">
+				<?php esc_attr_e('Tiêu đề:', 'twentytwenty'); ?>
+			</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('num_posts')); ?>">
+				<?php esc_attr_e('Số bài viết (tổng, chia 2 cột):', 'twentytwenty'); ?>
+			</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('num_posts')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('num_posts')); ?>" type="number" step="2" min="2" max="20"
+				value="<?php echo esc_attr($num_posts); ?>" size="3">
+			<br><small>(Phải là số chẵn để chia đều 2 cột)</small>
+		</p>
+		<?php
+	}
+
+	// Update options khi save
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+		$instance['num_posts'] = (!empty($new_instance['num_posts'])) ? absint($new_instance['num_posts']) : 8;
+		return $instance;
+	}
+}
+
+// Đăng ký widget
+function register_latest_posts_sidebar_widget()
+{
+	register_widget('Latest_Posts_Sidebar_Widget');
+}
+add_action('widgets_init', 'register_latest_posts_sidebar_widget');
+
+// Function hỗ trợ hiển thị latest posts (custom với số lượng)
+if (!function_exists('display_latest_posts_sidebar_custom')) {
+	function display_latest_posts_sidebar_custom($title = 'Xem mới', $total_posts = 8)
+	{
+		$posts_per_column = $total_posts / 2; // Giả sử chẵn
+
+		// Args chung
+		$args_base = array(
+			'post_status' => 'publish',
+			'post_type' => 'post',
+			'ignore_sticky_posts' => true,
+		);
+
+		// Query cột trái: posts 1 đến n/2
+		$args_left = $args_base;
+		$args_left['posts_per_page'] = $posts_per_column;
+		$args_left['offset'] = 0;
+		$left_posts = new WP_Query($args_left);
+
+		// Query cột phải: posts n/2 +1 đến n
+		$args_right = $args_base;
+		$args_right['posts_per_page'] = $posts_per_column;
+		$args_right['offset'] = $posts_per_column;
+		$right_posts = new WP_Query($args_right);
+
+		if ($left_posts->have_posts() || $right_posts->have_posts()): ?>
+			<div class="view-more-btn">
+				<a href="<?php echo get_post_type_archive_link('post'); ?>">Xem nhiều</a>
+			</div>
+			<div class="latest-posts-grid">
+				<div class="latest-column left">
+					<?php
+					$i = 1;
+					if ($left_posts->have_posts()):
+						while ($left_posts->have_posts()):
+							$left_posts->the_post(); ?>
+							<div class="latest-item">
+								<span class="item-number"><?php echo $i; ?></span>
+								<div class="item-content">
+									<a href="<?php the_permalink(); ?>" class="item-title"><?php the_title(); ?></a>
+									<span class="item-badge"><?php echo get_comments_number(); ?></span>
+								</div>
+							</div>
+							<?php $i++; endwhile;
+					endif; ?>
+				</div>
+				<div class="latest-column right">
+					<?php
+					$j = $posts_per_column + 1;
+					if ($right_posts->have_posts()):
+						while ($right_posts->have_posts()):
+							$right_posts->the_post(); ?>
+							<div class="latest-item">
+								<span class="item-number"><?php echo $j; ?></span>
+								<div class="item-content">
+									<a href="<?php the_permalink(); ?>" class="item-title"><?php the_title(); ?></a>
+									<span class="item-badge"><?php echo get_comments_number(); ?></span>
+								</div>
+							</div>
+							<?php $j++; endwhile;
+					endif; ?>
+				</div>
+			</div>
+
+			<?php
+			$left_posts->reset_postdata();
+			$right_posts->reset_postdata();
+		else: ?>
+			<p>Không có bài viết mới.</p>
+		<?php endif;
+	}
+}
+
+// Fallback: Nếu sidebar-11 rỗng, auto hiển thị widget (tùy chọn)
+function fallback_latest_posts_if_empty()
+{
+	if (is_active_sidebar('sidebar-11')) {
+		dynamic_sidebar('sidebar-11');
+	} else {
+		the_widget('Latest_Posts_Sidebar_Widget', array('title' => 'Xem mới', 'num_posts' => 8));
+	}
+}
+?>

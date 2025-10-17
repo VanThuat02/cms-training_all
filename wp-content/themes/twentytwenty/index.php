@@ -15,75 +15,97 @@
  */
 
 get_header();
+$has_sidebar_11 = is_active_sidebar('sidebar-11');
 ?>
 
 <main id="site-content" class="site-main">
+	<div class="layout-wrapper">
+		<!-- CỘT TRÁI: Archive -->
+		<aside class="sidebar-left">
+			<?php if (is_active_sidebar('sidebar-11')): ?>
+				<div class="widget-categories">
+					<?php dynamic_sidebar('sidebar-11'); ?>
+				</div>
+			
+			<?php endif; ?>
+		</aside>
 
-	<div class="post-list">
+		<div class="post-list">
 
-		<?php if (have_posts()): ?>
-			<?php while (have_posts()):
-				the_post(); ?>
+			<?php if (have_posts()): ?>
+				<?php while (have_posts()):
+					the_post(); ?>
 
-				<article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
+					<article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
 
-					<!-- Ảnh thumbnail -->
-					<div class="post-thumbnail">
-						<a href="<?php the_permalink(); ?>">
-							<?php
-							if (has_post_thumbnail()) {
-								the_post_thumbnail('medium');
-							} else {
-								echo '<img src="https://via.placeholder.com/280x180?text=No+Image" alt="No image">';
-							}
-							?>
-						</a>
-					</div>
-
-					<!-- Cột ngày -->
-					<div class="post-date">
-						<span class="day"><?php echo get_the_date('d'); ?></span>
-						<span class="month"><?php echo strtoupper(get_the_date('M')); ?></span>
-						<span class="year"><?php echo get_the_date('Y'); ?></span>
-					</div>
-
-					<!-- Nội dung -->
-					<div class="post-content">
-						<div class="post-category"><?php the_category(', '); ?></div>
-
-						<h2 class="post-title">
-							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-						</h2>
-
-						<div class="post-meta">
-							<span class="author">Bởi <?php the_author(); ?></span> |
-							<span class="comments"><?php comments_number('0 bình luận', '1 bình luận', '% bình luận'); ?></span>
+						<!-- Ảnh thumbnail -->
+						<div class="post-thumbnail">
+							<a href="<?php the_permalink(); ?>">
+								<?php
+								if (has_post_thumbnail()) {
+									the_post_thumbnail('medium');
+								} else {
+									echo '<img src="https://via.placeholder.com/280x180?text=No+Image" alt="No image">';
+								}
+								?>
+							</a>
 						</div>
 
-						<div class="post-excerpt">
-							<?php the_excerpt(); ?>
+						<!-- Cột ngày -->
+						<div class="post-date">
+							<span class="day"><?php echo get_the_date('d'); ?></span>
+							<span class="month"><?php echo strtoupper(get_the_date('M')); ?></span>
+							<span class="year"><?php echo get_the_date('Y'); ?></span>
 						</div>
-					</div>
 
-				</article>
+						<!-- Nội dung -->
+						<div class="post-content">
+							<div class="post-category"><?php the_category(', '); ?></div>
 
-			<?php endwhile; ?>
+							<h2 class="post-title">
+								<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+							</h2>
 
-			<!-- Pagination -->
-			<div class="pagination">
-				<?php the_posts_pagination(array(
-					'mid_size' => 2,
-					'prev_text' => __('« Trước'),
-					'next_text' => __('Sau »'),
-				)); ?>
-			</div>
+							<div class="post-meta">
+								<span class="author">Bởi <?php the_author(); ?></span> |
+								<span
+									class="comments"><?php comments_number('0 bình luận', '1 bình luận', '% bình luận'); ?></span>
+							</div>
+
+							<div class="post-excerpt">
+								<?php the_excerpt(); ?>
+							</div>
+						</div>
+
+					</article>
+
+				<?php endwhile; ?>
+
+				<!-- Pagination -->
+				<div class="pagination">
+					<?php the_posts_pagination(array(
+						'mid_size' => 2,
+						'prev_text' => __('« Trước'),
+						'next_text' => __('Sau »'),
+					)); ?>
+				</div>
 
 
-		<?php else: ?>
-			<p>Không có bài viết nào.</p>
-		<?php endif; ?>
+			<?php else: ?>
+				<p>Không có bài viết nào.</p>
+			<?php endif; ?>
 
-	</div>
+		</div>
+
+		<!-- CỘT PHẢI: Archive -->
+		<aside class="sidebar-right">
+			<?php if (true): // Luôn hiển thị phần latest posts thay vì widget ?>
+				<div class="widget-categories">
+					<?php get_comments_link(); // Gọi function custom ?>
+				</div>
+			<?php endif; ?>
+		</aside>
+	</div> <!-- layout-wrapper -->
 
 </main>
 
@@ -92,3 +114,4 @@ get_header();
 
 <?php
 get_footer();
+?>
