@@ -7695,3 +7695,24 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
     max-width: 92rem;
     width: calc(100% - 4rem);
 }
+
+
+
+
+.comment-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+.comment-item .item-content .item-title{
+	color: #05a4ed;
+	font-size: 13px;
+}
+
