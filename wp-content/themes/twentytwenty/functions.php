@@ -1136,130 +1136,356 @@ function fallback_latest_posts_if_empty()
 
 
 // Custom Widget cho Recent Comments (danh sách excerpt, numbered, giống ảnh)
-class Recent_Comments_Sidebar_Widget extends WP_Widget {
-    
-    // Constructor
-    public function __construct() {
-        $widget_ops = array(
-            'classname' => 'recent_comments_sidebar_widget',
-            'description' => __('Hiển thị danh sách comments mới nhất với excerpt ngắn. Có thể chỉnh số lượng và tiêu đề.', 'twentytwenty'),
-        );
-        parent::__construct(
-            'recent_comments_sidebar_widget',
-            __('Recent Comments Sidebar', 'twentytwenty'),
-            $widget_ops
-        );
-    }
-    
-    // Output HTML của widget
-    public function widget($args, $instance) {
-        // Lấy options
-        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
-        $num_comments = !empty($instance['num_comments']) ? absint($instance['num_comments']) : 5;
-        $excerpt_length = !empty($instance['excerpt_length']) ? absint($instance['excerpt_length']) : 20; // Độ dài excerpt
-        
-        echo $args['before_widget'];
-        
-        // Title
-        if (!empty($instance['title'])) {
-            echo $args['before_title'] . apply_filters('widget_title', $title) . $args['after_title'];
-        }
-        
-        // Gọi function hiển thị comments
-        display_recent_comments_sidebar($num_comments, $excerpt_length);
-        
-        echo $args['after_widget'];
-    }
-    
-    // Form chỉnh sửa trong WP Admin
-    public function form($instance) {
-        $title = !empty($instance['title']) ? $instance['title'] : 'Comments';
-        $num_comments = !empty($instance['num_comments']) ? absint($instance['num_comments']) : 5;
-        $excerpt_length = !empty($instance['excerpt_length']) ? absint($instance['excerpt_length']) : 20;
-        ?>
-        <p>
-            <label for="<?php echo esc_attr($this->get_field_id('title')); ?>">
-                <?php esc_attr_e('Tiêu đề:', 'twentytwenty'); ?>
-            </label>
-            <input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>" 
-                   name="<?php echo esc_attr($this->get_field_name('title')); ?>" 
-                   type="text" value="<?php echo esc_attr($title); ?>">
-        </p>
-        <p>
-            <label for="<?php echo esc_attr($this->get_field_id('num_comments')); ?>">
-                <?php esc_attr_e('Số comments:', 'twentytwenty'); ?>
-            </label>
-            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('num_comments')); ?>" 
-                   name="<?php echo esc_attr($this->get_field_name('num_comments')); ?>" 
-                   type="number" step="1" min="1" max="20" value="<?php echo esc_attr($num_comments); ?>" size="3">
-        </p>
-        <p>
-            <label for="<?php echo esc_attr($this->get_field_id('excerpt_length')); ?>">
-                <?php esc_attr_e('Độ dài excerpt (ký tự):', 'twentytwenty'); ?>
-            </label>
-            <input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('excerpt_length')); ?>" 
-                   name="<?php echo esc_attr($this->get_field_name('excerpt_length')); ?>" 
-                   type="number" step="1" min="10" max="100" value="<?php echo esc_attr($excerpt_length); ?>" size="3">
-        </p>
-        <?php
-    }
-    
-    // Update options
-    public function update($new_instance, $old_instance) {
-        $instance = array();
-        $instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
-        $instance['num_comments'] = (!empty($new_instance['num_comments'])) ? absint($new_instance['num_comments']) : 5;
-        $instance['excerpt_length'] = (!empty($new_instance['excerpt_length'])) ? absint($new_instance['excerpt_length']) : 20;
-        return $instance;
-    }
+class Recent_Comments_Sidebar_Widget extends WP_Widget
+{
+
+	// Constructor
+	public function __construct()
+	{
+		$widget_ops = array(
+			'classname' => 'recent_comments_sidebar_widget',
+			'description' => __('Hiển thị danh sách comments mới nhất với excerpt ngắn. Có thể chỉnh số lượng và tiêu đề.', 'twentytwenty'),
+		);
+		parent::__construct(
+			'recent_comments_sidebar_widget',
+			__('Recent Comments Sidebar', 'twentytwenty'),
+			$widget_ops
+		);
+	}
+
+	// Output HTML của widget
+	public function widget($args, $instance)
+	{
+		// Lấy options
+		$title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+		$num_comments = !empty($instance['num_comments']) ? absint($instance['num_comments']) : 5;
+		$excerpt_length = !empty($instance['excerpt_length']) ? absint($instance['excerpt_length']) : 20; // Độ dài excerpt
+
+		echo $args['before_widget'];
+
+		// Title
+		if (!empty($instance['title'])) {
+			echo $args['before_title'] . apply_filters('widget_title', $title) . $args['after_title'];
+		}
+
+		// Gọi function hiển thị comments
+		display_recent_comments_sidebar($num_comments, $excerpt_length);
+
+		echo $args['after_widget'];
+	}
+
+	// Form chỉnh sửa trong WP Admin
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Comments';
+		$num_comments = !empty($instance['num_comments']) ? absint($instance['num_comments']) : 5;
+		$excerpt_length = !empty($instance['excerpt_length']) ? absint($instance['excerpt_length']) : 20;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">
+				<?php esc_attr_e('Tiêu đề:', 'twentytwenty'); ?>
+			</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('num_comments')); ?>">
+				<?php esc_attr_e('Số comments:', 'twentytwenty'); ?>
+			</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('num_comments')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('num_comments')); ?>" type="number" step="1" min="1" max="20"
+				value="<?php echo esc_attr($num_comments); ?>" size="3">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('excerpt_length')); ?>">
+				<?php esc_attr_e('Độ dài excerpt (ký tự):', 'twentytwenty'); ?>
+			</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('excerpt_length')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('excerpt_length')); ?>" type="number" step="1" min="10"
+				max="100" value="<?php echo esc_attr($excerpt_length); ?>" size="3">
+		</p>
+		<?php
+	}
+
+	// Update options
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+		$instance['num_comments'] = (!empty($new_instance['num_comments'])) ? absint($new_instance['num_comments']) : 5;
+		$instance['excerpt_length'] = (!empty($new_instance['excerpt_length'])) ? absint($new_instance['excerpt_length']) : 20;
+		return $instance;
+	}
 }
 
 // Đăng ký widget
-function register_recent_comments_sidebar_widget() {
-    register_widget('Recent_Comments_Sidebar_Widget');
+function register_recent_comments_sidebar_widget()
+{
+	register_widget('Recent_Comments_Sidebar_Widget');
 }
 add_action('widgets_init', 'register_recent_comments_sidebar_widget');
 
 // Function hỗ trợ hiển thị recent comments (numbered list, excerpt)
 if (!function_exists('display_recent_comments_sidebar')) {
-    function display_recent_comments_sidebar($num_comments = 5, $excerpt_length = 20) {
-        $comments = get_comments(array(
-            'number' => $num_comments,
-            'status' => 'approve',
-            'post_status' => 'publish',
-            'type' => 'comment', // Chỉ comment, không ping/trackback
-        ));
-        
-        if ($comments): ?>
-            <div class="recent-comments-list">
-                <?php 
-                $i = 1;
-                foreach ($comments as $comment): 
-                    $comment_excerpt = wp_trim_words(strip_tags($comment->comment_content), $excerpt_length / 4, '...'); // Trim words thay vì ký tự để tự nhiên hơn
-                ?>
-                    <div class="comment-item">
-                        <span class="item-number"><?php echo $i; ?></span>
-                        <div class="item-content">
-                            <a href="<?php echo get_comment_link($comment); ?>" class="item-title"><?php echo esc_html($comment_excerpt); ?></a>
-                        </div>
-                    </div>
-                <?php 
-                    $i++;
-                endforeach; 
-                ?>
-            </div>
-        <?php else: ?>
-            <p>Không có bình luận mới.</p>
-        <?php endif;
-    }
+	function display_recent_comments_sidebar($num_comments = 5, $excerpt_length = 20)
+	{
+		$comments = get_comments(array(
+			'number' => $num_comments,
+			'status' => 'approve',
+			'post_status' => 'publish',
+			'type' => 'comment', // Chỉ comment, không ping/trackback
+		));
+
+		if ($comments): ?>
+			<div class="recent-comments-list">
+				<?php
+				$i = 1;
+				foreach ($comments as $comment):
+					$comment_excerpt = wp_trim_words(strip_tags($comment->comment_content), $excerpt_length / 4, '...'); // Trim words thay vì ký tự để tự nhiên hơn
+					?>
+					<div class="comment-item">
+						<span class="item-number"><?php echo $i; ?></span>
+						<div class="item-content">
+							<a href="<?php echo get_comment_link($comment); ?>"
+								class="item-title"><?php echo esc_html($comment_excerpt); ?></a>
+						</div>
+					</div>
+					<?php
+					$i++;
+				endforeach;
+				?>
+			</div>
+		<?php else: ?>
+			<p>Không có bình luận mới.</p>
+		<?php endif;
+	}
 }
 
 // Fallback: Nếu sidebar-12 rỗng, auto hiển thị recent comments (tùy chọn)
-function fallback_recent_comments_if_empty() {
-    if (is_active_sidebar('sidebar-12')) {
-        dynamic_sidebar('sidebar-12');
-    } else {
-        the_widget('Recent_Comments_Sidebar_Widget', array('title' => 'Comments', 'num_comments' => 5, 'excerpt_length' => 20));
-    }
+function fallback_recent_comments_if_empty()
+{
+	if (is_active_sidebar('sidebar-12')) {
+		dynamic_sidebar('sidebar-12');
+	} else {
+		the_widget('Recent_Comments_Sidebar_Widget', array('title' => 'Comments', 'num_comments' => 5, 'excerpt_length' => 20));
+	}
 }
+
+
+// Custom Widget cho Categories (bullet vàng, text xanh, giống ảnh)
+class Categories_Sidebar_Widget extends WP_Widget
+{
+
+	// Constructor
+	public function __construct()
+	{
+		$widget_ops = array(
+			'classname' => 'categories_sidebar_widget',
+			'description' => __('Hiển thị danh sách categories với bullet vàng và style tùy chỉnh. Có thể chỉnh số lượng và tiêu đề.', 'twentytwenty'),
+		);
+		parent::__construct(
+			'categories_sidebar_widget',
+			__('Categories Sidebar (Custom)', 'twentytwenty'),
+			$widget_ops
+		);
+	}
+
+	// Output HTML của widget
+	public function widget($args, $instance)
+	{
+		// Lấy options
+		$title = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$num_categories = !empty($instance['num_categories']) ? absint($instance['num_categories']) : 0; // 0 = all
+
+		echo $args['before_widget'];
+
+		// Title
+		if (!empty($instance['title'])) {
+			echo $args['before_title'] . apply_filters('widget_title', $title) . $args['after_title'];
+		}
+
+		// Gọi function hiển thị categories
+		display_categories_sidebar_custom($num_categories);
+
+		echo $args['after_widget'];
+	}
+
+	// Form chỉnh sửa trong WP Admin
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$num_categories = !empty($instance['num_categories']) ? absint($instance['num_categories']) : 0;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">
+				<?php esc_attr_e('Tiêu đề:', 'twentytwenty'); ?>
+			</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('num_categories')); ?>">
+				<?php esc_attr_e('Số categories (0 = tất cả):', 'twentytwenty'); ?>
+			</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('num_categories')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('num_categories')); ?>" type="number" step="1" min="0" max="50"
+				value="<?php echo esc_attr($num_categories); ?>" size="3">
+		</p>
+		<?php
+	}
+
+	// Update options
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+		$instance['num_categories'] = (!empty($new_instance['num_categories'])) ? absint($new_instance['num_categories']) : 0;
+		return $instance;
+	}
+}
+
+// Đăng ký widget
+function register_categories_sidebar_widget()
+{
+	register_widget('Categories_Sidebar_Widget');
+}
+add_action('widgets_init', 'register_categories_sidebar_widget');
+
+// Function hỗ trợ hiển thị custom categories (bullet vàng, text xanh)
+if (!function_exists('display_categories_sidebar_custom')) {
+	function display_categories_sidebar_custom($num = 0)
+	{
+		$args = array(
+			'orderby' => 'name',
+			'order' => 'ASC',
+			'echo' => 0, // Return string
+			'show_count' => 0,
+			'hierarchical' => false,
+			'number' => $num, // Số lượng nếu >0
+			'title_li' => '', // Không title
+		);
+		$categories_list = wp_list_categories($args);
+
+		if ($categories_list): ?>
+			<ul class="custom-categories-list">
+				<?php echo $categories_list; ?>
+			</ul>
+		<?php else: ?>
+			<p>Không có categories.</p>
+		<?php endif;
+	}
+}
+
+// Fallback: Nếu sidebar-9 rỗng, auto hiển thị categories
+function fallback_categories_if_empty()
+{
+	if (is_active_sidebar('sidebar-9')) {
+		dynamic_sidebar('sidebar-9');
+	} else {
+		the_widget('Categories_Sidebar_Widget', array('title' => 'Categories', 'num_categories' => 0));
+	}
+}
+
+
+
+// Custom Widget cho Recent Posts (giống ảnh: date box, nền xanh nhạt, button dưới)
+class Recent_Posts_Sidebar_Widget extends WP_Widget
+{
+
+	public function __construct()
+	{
+		$widget_ops = array(
+			'classname' => 'recent_posts_sidebar_widget',
+			'description' => __('Hiển thị recent posts với date box (day sup month / year), nền xanh nhạt cho item, và button Xem tất cả. Chỉnh số lượng và title trong admin.', 'twentytwenty'),
+		);
+		parent::__construct(
+			'recent_posts_sidebar_widget',
+			__('Recent Posts (Giống Ảnh)', 'twentytwenty'),
+			$widget_ops
+		);
+	}
+
+	public function widget($args, $instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'TIN TỨC MỚI';
+		$num_posts = !empty($instance['num_posts']) ? absint($instance['num_posts']) : 3;
+
+		echo $args['before_widget'];
+		if (!empty($title)) {
+			echo $args['before_title'] . apply_filters('widget_title', $title) . $args['after_title'];
+		}
+
+		// Query và output giống ảnh
+		$recent_posts_query = new WP_Query(array(
+			'posts_per_page' => $num_posts,
+			'post_status' => 'publish',
+			'ignore_sticky_posts' => true,
+		));
+
+		if ($recent_posts_query->have_posts()): ?>
+			<ul class="recent-custom-list">
+				<?php while ($recent_posts_query->have_posts()):
+					$recent_posts_query->the_post(); ?>
+					<li class="recent-item">
+						<div class="date-box">
+							<div class="day-year">
+								<span class="day"><?php echo get_the_date('d'); ?></span>
+								<sup class="year"><?php echo get_the_date('y'); ?></sup>
+							</div>
+							<div class="month"><?php echo get_the_date('m'); ?></div>
+						</div>
+						<div class="title-box">
+							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+						</div>
+					</li>
+				<?php endwhile;
+				wp_reset_postdata(); ?>
+			</ul>
+			<div class="view-all">
+				<a href="<?php echo get_permalink(get_option('page_for_posts')); ?>">XEM TẤT CẢ TIN TỨC</a>
+			</div>
+		<?php else: ?>
+			<p>Không có bài viết mới.</p>
+		<?php endif;
+
+		echo $args['after_widget'];
+	}
+
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'TIN TỨC MỚI';
+		$num_posts = !empty($instance['num_posts']) ? absint($instance['num_posts']) : 3;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('num_posts')); ?>">Số bài viết:</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('num_posts')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('num_posts')); ?>" type="number" step="1" min="1" max="10"
+				value="<?php echo esc_attr($num_posts); ?>" size="3">
+		</p>
+		<?php
+	}
+
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+		$instance['num_posts'] = (!empty($new_instance['num_posts'])) ? absint($new_instance['num_posts']) : 3;
+		return $instance;
+	}
+}
+
+// Đăng ký widget
+function register_recent_posts_sidebar_widget()
+{
+	register_widget('Recent_Posts_Sidebar_Widget');
+}
+add_action('widgets_init', 'register_recent_posts_sidebar_widget');
 ?>
