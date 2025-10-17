@@ -26,11 +26,6 @@ $has_sidebar_10 = is_active_sidebar('sidebar-10'); // Recent post
 				<div class="widget-categories">
 					<?php dynamic_sidebar('sidebar-9'); ?>
 				</div>
-			<?php else: ?>
-				<div class="widget-categories">
-					<h2 class="widget-title">Categories</h2>
-					<ul><?php wp_list_categories(['title_li' => '']); ?></ul>
-				</div>
 			<?php endif; ?>
 		</aside>
 
