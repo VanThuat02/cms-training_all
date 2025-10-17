@@ -7496,13 +7496,22 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	width: 30px;
 	margin-right: 50px;
 	font-weight: 600;
-	line-height: 1;
 	color: #fff;
+	font-size: 14px !important;
+	/* Tăng base size */
+	padding: 8px 10px !important;
+	/* Padding to hơn */
+	min-width: 55px !important;
+	/* Rộng hơn */
+	line-height: 1.3 !important;
+	/* Tăng khoảng cách dòng */
 }
 
 .widget-recent .day-year {
 	position: relative;
 	display: inline-block;
+	margin-bottom: 2px !important;
+
 }
 
 .widget-recent .day {
@@ -7510,6 +7519,7 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	display: inline-block;
 	border-bottom: 1px solid #fff;
 	padding-bottom: 2px;
+	margin-right: 2px !important;
 }
 
 .widget-recent .year {
@@ -7517,15 +7527,19 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	top: 20px;
 	/* đẩy lên trên góc phải */
 	right: -19px;
-	font-size: 11px;
 	font-weight: 400;
 	opacity: 0.9;
+	font-size: 12px !important;
+	/* Tăng sup size để không nhỏ quá */
+	margin-left: 0 !important;
+	/* Bỏ negative margin nếu muốn space */
 }
 
 .widget-recent .month {
-	font-size: 13px;
-	margin-top: 2px;
+	font-size: 12px !important;
 	line-height: 1.2;
+	font-size: 14px ;
+	margin-top: 0 !important;
 }
 
 /* Tiêu đề bài viết */
@@ -7656,63 +7670,63 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	font-style: oblique;
 	border-bottom: 2px solid #9f224e;
 }
+
 .view-more-btn a:hover {
 	font-size: 20px;
 	color: #000;
 	font-style: oblique;
 	border-bottom: 2px solid #9f224e;
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .item-badge {
-    font-size: 10px;
-    color: #999;
-    background: #f0f0f0;
-    padding: 2px 4px;
-    border-radius: 3px;
-    display: inline-block;
-    margin-left: 5px;
+	font-size: 10px;
+	color: #999;
+	background: #f0f0f0;
+	padding: 2px 4px;
+	border-radius: 3px;
+	display: inline-block;
+	margin-left: 5px;
 }
 
 .latest-posts-grid {
-    display: flex !important;
-    gap: 15px !important;
-    justify-content: space-between;
+	display: flex !important;
+	gap: 15px !important;
+	justify-content: space-between;
 }
 
 .latest-column {
-    flex: 1 !important;
-    width: 48% !important;
+	flex: 1 !important;
+	width: 48% !important;
 }
 
 .latest-column.left,
 .latest-column.right {
-    display: block !important;
+	display: block !important;
 }
 
 
 .entry-content>*:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.is-style-wide) {
-    max-width: 92rem;
-    width: calc(100% - 4rem);
+	max-width: 92rem;
+	width: calc(100% - 4rem);
 }
 
 
 
 
 .comment-item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #eee;
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 10px;
+	padding-bottom: 8px;
+	border-bottom: 1px solid #eee;
 }
 
 .comment-item:last-child {
-    border-bottom: none;
+	border-bottom: none;
 }
 
-.comment-item .item-content .item-title{
+.comment-item .item-content .item-title {
 	color: #05a4ed;
 	font-size: 13px;
 }
-
