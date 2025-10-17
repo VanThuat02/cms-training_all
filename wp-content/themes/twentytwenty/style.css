@@ -2578,6 +2578,10 @@ h2.entry-title {
 .featured-media {
 	margin-top: 5rem;
 	position: relative;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
 }
 
 .singular .featured-media {
@@ -7357,12 +7361,12 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	padding: 20px;
 }
 
-.sidebar-left,
+/* .sidebar-left,
 .sidebar-right {
 	background: #f9f9f9;
 	padding: 15px;
 	border-radius: 8px;
-}
+} */
 
 .widget-title {
 	font-weight: bold;
@@ -7378,13 +7382,13 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	border-radius: 8px;
 }
 
-.post-navigation-wrapper {
+/* .post-navigation-wrapper {
 	margin-top: 30px;
 	padding: 15px;
 	background: #f0f0f0;
 	border-radius: 8px;
 	text-align: center;
-}
+} */
 
 .comments-wrapper {
 	margin-top: 30px;
@@ -7482,6 +7486,7 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	align-items: center;
 	margin-bottom: 15px;
 }
+
 /* ===== DATE LAYOUT CHUẨN (29 / 09 + 25 nhỏ góc trên phải) ===== */
 .widget-recent .date-box {
 	display: flex;
@@ -7509,7 +7514,8 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 
 .widget-recent .year {
 	position: absolute;
-	top: 20px; /* đẩy lên trên góc phải */
+	top: 20px;
+	/* đẩy lên trên góc phải */
 	right: -19px;
 	font-size: 11px;
 	font-weight: 400;
@@ -7552,4 +7558,140 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 	text-transform: uppercase;
 	text-decoration: none;
 	font-size: 13px;
+}
+
+
+/* archive category title */
+.widget-categories {
+	background: #fff;
+	padding: 20px;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.widget-categories h3 {
+	font-size: 18px;
+	font-weight: bold;
+	margin: 0 0 20px 0;
+	color: #333;
+	text-align: center;
+	padding-bottom: 10px;
+	border-bottom: 2px solid #e74c3c;
+}
+
+
+.latest-item {
+	display: flex;
+	align-items: flex-start;
+	margin-bottom: 18px;
+	line-height: 1.3;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.latest-item:last-child {
+	margin-bottom: 0;
+	border-bottom: none;
+}
+
+
+
+.item-number {
+	font-size: 32px;
+	font-weight: bold;
+	color: #333;
+	/* Đỏ nổi bật như số trong ảnh */
+	min-width: 40px;
+	margin-right: 12px;
+	line-height: 1.1;
+	flex-shrink: 0;
+}
+
+.item-content {
+	flex: 1;
+}
+
+.item-title {
+	font-size: 11px;
+	color: #333;
+	text-decoration: none;
+	display: block;
+	margin: 0 0 4px 0;
+	line-height: 1.4;
+	font-weight: 400;
+	hyphens: auto;
+	/* Cho phép wrap từ */
+	word-wrap: break-word;
+}
+
+.item-title:hover {
+	color: #e74c3c;
+}
+
+.item-date {
+	font-size: 12px;
+	color: #999;
+	display: block;
+	margin-top: 0;
+	font-style: italic;
+}
+
+/* Sidebar width để vừa với nội dung hẹp */
+.sidebar-left {
+	width: 100%;
+	padding-right: 0;
+}
+
+
+.post-list {
+	flex: 1;
+}
+
+
+.view-more-btn a {
+	font-size: 20px;
+	color: #000;
+	font-style: oblique;
+	border-bottom: 2px solid #9f224e;
+}
+.view-more-btn a:hover {
+	font-size: 20px;
+	color: #000;
+	font-style: oblique;
+	border-bottom: 2px solid #9f224e;
+    text-decoration: none;
+}
+
+.item-badge {
+    font-size: 10px;
+    color: #999;
+    background: #f0f0f0;
+    padding: 2px 4px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.latest-posts-grid {
+    display: flex !important;
+    gap: 15px !important;
+    justify-content: space-between;
+}
+
+.latest-column {
+    flex: 1 !important;
+    width: 48% !important;
+}
+
+.latest-column.left,
+.latest-column.right {
+    display: block !important;
+}
+
+
+.entry-content>*:not(.alignwide):not(.alignfull):not(.alignleft):not(.alignright):not(.is-style-wide) {
+    max-width: 92rem;
+    width: calc(100% - 4rem);
 }
