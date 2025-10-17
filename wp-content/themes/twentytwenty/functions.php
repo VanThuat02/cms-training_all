@@ -932,3 +932,117 @@ function custom_excerpt_more($more)
 }
 add_filter('excerpt_more', 'custom_excerpt_more');
 
+class Categories_Sidebar_Widget extends WP_Widget
+{
+
+	// Constructor
+	public function __construct()
+	{
+		$widget_ops = array(
+			'classname' => 'categories_sidebar_widget',
+			'description' => __('Hiển thị danh sách categories với bullet vàng và style tùy chỉnh. Có thể chỉnh số lượng và tiêu đề.', 'twentytwenty'),
+		);
+		parent::__construct(
+			'categories_sidebar_widget',
+			__('Categories Sidebar (Custom)', 'twentytwenty'),
+			$widget_ops
+		);
+	}
+
+	// Output HTML của widget
+	public function widget($args, $instance)
+	{
+		// Lấy options
+		$title = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$num_categories = !empty($instance['num_categories']) ? absint($instance['num_categories']) : 0; // 0 = all
+
+		echo $args['before_widget'];
+
+		// Title
+		if (!empty($instance['title'])) {
+			echo $args['before_title'] . apply_filters('widget_title', $title) . $args['after_title'];
+		}
+
+		// Gọi function hiển thị categories
+		display_categories_sidebar_custom($num_categories);
+
+		echo $args['after_widget'];
+	}
+
+	// Form chỉnh sửa trong WP Admin
+	public function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : 'Categories';
+		$num_categories = !empty($instance['num_categories']) ? absint($instance['num_categories']) : 0;
+		?>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('title')); ?>">
+				<?php esc_attr_e('Tiêu đề:', 'twentytwenty'); ?>
+			</label>
+			<input class="widefat" id="<?php echo esc_attr($this->get_field_id('title')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('title')); ?>" type="text"
+				value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo esc_attr($this->get_field_id('num_categories')); ?>">
+				<?php esc_attr_e('Số categories (0 = tất cả):', 'twentytwenty'); ?>
+			</label>
+			<input class="tiny-text" id="<?php echo esc_attr($this->get_field_id('num_categories')); ?>"
+				name="<?php echo esc_attr($this->get_field_name('num_categories')); ?>" type="number" step="1" min="0" max="50"
+				value="<?php echo esc_attr($num_categories); ?>" size="3">
+		</p>
+		<?php
+	}
+
+	// Update options
+	public function update($new_instance, $old_instance)
+	{
+		$instance = array();
+		$instance['title'] = (!empty($new_instance['title'])) ? sanitize_text_field($new_instance['title']) : '';
+		$instance['num_categories'] = (!empty($new_instance['num_categories'])) ? absint($new_instance['num_categories']) : 0;
+		return $instance;
+	}
+}
+
+// Đăng ký widget
+function register_categories_sidebar_widget()
+{
+	register_widget('Categories_Sidebar_Widget');
+}
+add_action('widgets_init', 'register_categories_sidebar_widget');
+
+// Function hỗ trợ hiển thị custom categories (bullet vàng, text xanh)
+if (!function_exists('display_categories_sidebar_custom')) {
+	function display_categories_sidebar_custom($num = 0)
+	{
+		$args = array(
+			'orderby' => 'name',
+			'order' => 'ASC',
+			'echo' => 0, // Return string
+			'show_count' => 0,
+			'hierarchical' => false,
+			'number' => $num, // Số lượng nếu >0
+			'title_li' => '', // Không title
+		);
+		$categories_list = wp_list_categories($args);
+
+		if ($categories_list): ?>
+			<ul class="custom-categories-list">
+				<?php echo $categories_list; ?>
+			</ul>
+		<?php else: ?>
+			<p>Không có categories.</p>
+		<?php endif;
+	}
+}
+
+// Fallback: Nếu sidebar-9 rỗng, auto hiển thị categories
+function fallback_categories_if_empty()
+{
+	if (is_active_sidebar('sidebar-9')) {
+		dynamic_sidebar('sidebar-9');
+	} else {
+		the_widget('Categories_Sidebar_Widget', array('title' => 'Categories', 'num_categories' => 0));
+	}
+}
+?>
