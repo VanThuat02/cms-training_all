@@ -16,6 +16,7 @@
 
 get_header();
 $has_sidebar_11 = is_active_sidebar('sidebar-11');
+$has_sidebar_12 = is_active_sidebar('sidebar-12');
 ?>
 
 <main id="site-content" class="site-main">
@@ -26,7 +27,7 @@ $has_sidebar_11 = is_active_sidebar('sidebar-11');
 				<div class="widget-categories">
 					<?php dynamic_sidebar('sidebar-11'); ?>
 				</div>
-			
+		
 			<?php endif; ?>
 		</aside>
 
@@ -97,12 +98,13 @@ $has_sidebar_11 = is_active_sidebar('sidebar-11');
 
 		</div>
 
-		<!-- CỘT PHẢI: Archive -->
-		<aside class="sidebar-right">
-			<?php if (true): // Luôn hiển thị phần latest posts thay vì widget ?>
+		<!-- CỘT PHẢI: Coment -->
+		<aside class="sidebar-left">
+			<?php if (is_active_sidebar('sidebar-12')): ?>
 				<div class="widget-categories">
-					<?php get_comments_link(); // Gọi function custom ?>
+					<?php dynamic_sidebar('sidebar-12'); ?>
 				</div>
+		
 			<?php endif; ?>
 		</aside>
 	</div> <!-- layout-wrapper -->
