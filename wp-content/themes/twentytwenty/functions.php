@@ -962,8 +962,16 @@ add_action('wp_enqueue_scripts', 'twentytwenty_child_enqueue_styles');
 
 function custom_posts_per_page($query)
 {
-	if (!is_admin() && $query->is_main_query() && $query->is_home()) {
-		$query->set('posts_per_page', 2);
+	if (!is_admin() && $query->is_main_query()) {
+		// Giới hạn cho trang chủ
+		if ($query->is_home()) {
+			$query->set('posts_per_page', 2);
+		}
+
+		// Giới hạn cho trang tìm kiếm
+		if ($query->is_search()) {
+			$query->set('posts_per_page', 2);
+		}
 	}
 }
 add_action('pre_get_posts', 'custom_posts_per_page');
