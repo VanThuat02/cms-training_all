@@ -44,6 +44,14 @@ get_header();
 			<!-- Search Header -->
 
 			<div class="search-content">
+				<!-- CỘT TRÁI 13 -->
+				<aside class="sidebar-left">
+					<?php if (is_active_sidebar('sidebar-13')): ?>
+						<div class="widget-categories">
+							<?php dynamic_sidebar('sidebar-13'); ?>
+						</div>
+					<?php endif; ?>
+				</aside>
 				<!-- KẾT QUẢ TÌM KIẾM (5) -->
 				<div class="post-list">
 					<?php if (have_posts()): ?>
