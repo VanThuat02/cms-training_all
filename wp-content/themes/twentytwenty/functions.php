@@ -540,6 +540,18 @@ function twentytwenty_sidebar_registration()
 		)
 	);
 
+	//Module #15
+	register_sidebar(
+		array_merge(
+			$shared_args,
+			array(
+				'name' => __('Last post #15', 'twentytwenty'),
+				'id' => 'sidebar-15',
+				'description' => __('Widgets in this area will be displayed in the 14 column in the Last post.', 'twentytwenty'),
+			)
+		)
+	);
+
 
 
 }
@@ -1612,117 +1624,207 @@ add_action('widgets_init', 'register_page_list_widget');
 
 class Comment_Style14_Widget extends WP_Widget
 {
-    function __construct()
-    {
-        parent::__construct(
-            'comment_style14_widget',
-            __('Comments (Sidebar #14)', 'twentytwenty'),
-            ['description' => __('Hiển thị bình luận dạng khối có hỗ trợ trả lời (threaded).', 'twentytwenty')]
-        );
-    }
+	function __construct()
+	{
+		parent::__construct(
+			'comment_style14_widget',
+			__('Comments (Sidebar #14)', 'twentytwenty'),
+			['description' => __('Hiển thị bình luận dạng khối có hỗ trợ trả lời (threaded).', 'twentytwenty')]
+		);
+	}
 
-    function widget($args, $instance)
-    {
-        echo $args['before_widget'];
+	function widget($args, $instance)
+	{
+		echo $args['before_widget'];
 
-        $title = !empty($instance['title']) ? $instance['title'] : __('Bình luận mới', 'twentytwenty');
-        echo $args['before_title'] . esc_html($title) . $args['after_title'];
+		$title = !empty($instance['title']) ? $instance['title'] : __('Bình luận mới', 'twentytwenty');
+		echo $args['before_title'] . esc_html($title) . $args['after_title'];
 
-        // Lấy bình luận cha (comment_depth = 1)
-        $comments = get_comments([
-            'number' => 10,
-            'status' => 'approve',
-            'post_status' => 'publish',
-            'parent' => 0,
-        ]);
+		// Lấy bình luận cha (comment_depth = 1)
+		$comments = get_comments([
+			'number' => 10,
+			'status' => 'approve',
+			'post_status' => 'publish',
+			'parent' => 0,
+		]);
 
-        if (!empty($comments)) {
-            echo '<div class="container comment-style14-wrapper">';
-            echo '<div class="row">';
-            foreach ($comments as $comment) {
-                $this->render_comment($comment);
-            }
-            echo '</div>';
-            echo '</div>';
-        } else {
-            echo '<p>Chưa có bình luận nào.</p>';
-        }
+		if (!empty($comments)) {
+			echo '<div class="container comment-style14-wrapper">';
+			echo '<div class="row">';
+			foreach ($comments as $comment) {
+				$this->render_comment($comment);
+			}
+			echo '</div>';
+			echo '</div>';
+		} else {
+			echo '<p>Chưa có bình luận nào.</p>';
+		}
 
-        echo $args['after_widget'];
-    }
+		echo $args['after_widget'];
+	}
 
-    private function render_comment($comment, $is_top_level = true)
-    {
-        $avatar = get_avatar_url($comment->comment_author_email, ['size' => 50]);
-        $content = esc_html($comment->comment_content); // Full content như mockup
-        $author = esc_html($comment->comment_author);
+	private function render_comment($comment, $is_top_level = true)
+	{
+		$avatar = get_avatar_url($comment->comment_author_email, ['size' => 50]);
+		$content = esc_html($comment->comment_content); // Full content như mockup
+		$author = esc_html($comment->comment_author);
 
-        if ($is_top_level) {
-            echo '<div class="media comment-box">';
-        } else {
-            echo '<div class="media">';
-        }
+		if ($is_top_level) {
+			echo '<div class="media comment-box">';
+		} else {
+			echo '<div class="media">';
+		}
 
-        echo '<div class="media-left">';
-        echo '<a href="#">';
-        echo '<img class="img-responsive user-photo" src="' . esc_url($avatar) . '" alt="' . esc_attr($author) . '">';
-        echo '</a>';
-        echo '</div>';
+		echo '<div class="media-left">';
+		echo '<a href="#">';
+		echo '<img class="img-responsive user-photo" src="' . esc_url($avatar) . '" alt="' . esc_attr($author) . '">';
+		echo '</a>';
+		echo '</div>';
 
-        echo '<div class="media-body">';
-        echo '<h4 class="media-heading">' . $author . '</h4>';
-        echo '<p>' . $content . '</p>';
+		echo '<div class="media-body">';
+		echo '<h4 class="media-heading">' . $author . '</h4>';
+		echo '<p>' . $content . '</p>';
 
-        // Lấy các reply (bình luận con)
-        $replies = get_comments([
-            'parent' => $comment->comment_ID,
-            'status' => 'approve',
-            'order' => 'ASC',
-        ]);
+		// Lấy các reply (bình luận con)
+		$replies = get_comments([
+			'parent' => $comment->comment_ID,
+			'status' => 'approve',
+			'order' => 'ASC',
+		]);
 
-        if ($replies) {
-            foreach ($replies as $reply) {
-                $this->render_comment($reply, false);
-            }
-        }
+		if ($replies) {
+			foreach ($replies as $reply) {
+				$this->render_comment($reply, false);
+			}
+		}
 
-        echo '</div>'; // media-body
-        echo '</div>'; // media
-    }
+		echo '</div>'; // media-body
+		echo '</div>'; // media
+	}
 
-    function form($instance)
-    {
-        $title = !empty($instance['title']) ? $instance['title'] : __('Bình luận mới', 'twentytwenty'); ?>
-        <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>">Tiêu đề:</label>
-            <input class="widefat"
-                id="<?php echo $this->get_field_id('title'); ?>"
-                name="<?php echo $this->get_field_name('title'); ?>"
-                type="text"
-                value="<?php echo esc_attr($title); ?>">
-        </p>
-        <?php
-    }
+	function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : __('Bình luận mới', 'twentytwenty'); ?>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+				name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+		</p>
+		<?php
+	}
 
-    function update($new_instance, $old_instance)
-    {
-        $instance = [];
-        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
-        return $instance;
-    }
+	function update($new_instance, $old_instance)
+	{
+		$instance = [];
+		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+		return $instance;
+	}
 }
 
 function register_comment_style14_widget()
 {
-    register_widget('Comment_Style14_Widget');
+	register_widget('Comment_Style14_Widget');
 }
 add_action('widgets_init', 'register_comment_style14_widget');
 
 // Enqueue Bootstrap nếu chưa có (thêm vào functions.php của theme)
-function enqueue_bootstrap_for_comment_widget() {
-    wp_enqueue_style('bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css');
-    wp_enqueue_script('jquery');
-    wp_enqueue_script('bootstrap-js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js', array('jquery'), false, true);
+function enqueue_bootstrap_for_comment_widget()
+{
+	wp_enqueue_style('bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css');
+	wp_enqueue_script('jquery');
+	wp_enqueue_script('bootstrap-js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js', array('jquery'), false, true);
 }
 add_action('wp_enqueue_scripts', 'enqueue_bootstrap_for_comment_widget');
-?>
+
+
+// Module 15: Latest News Timeline
+class Latest_News_Widget extends WP_Widget
+{
+	function __construct()
+	{
+		parent::__construct(
+			'latest_news_widget',
+			__('Latest News (Sidebar #15)', 'twentytwenty'),
+			['description' => __('Hiển thị tin tức mới nhất dạng timeline Bootstrap.', 'twentytwenty')]
+		);
+	}
+
+	function widget($args, $instance)
+	{
+		echo $args['before_widget'];
+
+		$title = !empty($instance['title']) ? $instance['title'] : __('Latest News', 'twentytwenty');
+		$num_posts = !empty($instance['num_posts']) ? absint($instance['num_posts']) : 5;
+
+		echo $args['before_title'] . esc_html($title) . $args['after_title'];
+
+		// Lấy bài viết mới nhất
+		$posts = get_posts([
+			'numberposts' => $num_posts,
+			'post_status' => 'publish',
+			'post_type' => 'post',
+			'orderby' => 'date',
+			'order' => 'DESC',
+		]);
+
+		if (!empty($posts)) {
+			echo '<div class="container mt-3 mb-3">';
+			echo '<div class="row"><div class="col-12">';
+			echo '<ul class="timeline">';
+
+			foreach ($posts as $post) {
+				$post_link = get_permalink($post->ID);
+				$post_title = get_the_title($post->ID);
+				$post_date = get_the_date('j F, Y', $post->ID);
+				$post_excerpt = wp_trim_words(strip_tags(get_the_content(null, false, $post)), 25, '...');
+
+				echo '<li>';
+				echo '<a target="_blank" href="' . esc_url($post_link) . '">' . esc_html($post_title) . '</a>';
+				echo '<a href="' . esc_url($post_link) . '" class="float-right">' . esc_html($post_date) . '</a>';
+				echo '<p>' . esc_html($post_excerpt) . '</p>';
+				echo '</li>';
+			}
+
+			echo '</ul>';
+			echo '</div></div></div>';
+		} else {
+			echo '<p>Chưa có tin tức nào.</p>';
+		}
+
+		echo $args['after_widget'];
+	}
+
+	function form($instance)
+	{
+		$title = !empty($instance['title']) ? $instance['title'] : __('Latest News', 'twentytwenty');
+		$num_posts = !empty($instance['num_posts']) ? $instance['num_posts'] : 5;
+		?>
+		<p>
+			<label for="<?php echo $this->get_field_id('title'); ?>">Tiêu đề:</label>
+			<input class="widefat" id="<?php echo $this->get_field_id('title'); ?>"
+				name="<?php echo $this->get_field_name('title'); ?>" type="text" value="<?php echo esc_attr($title); ?>">
+		</p>
+		<p>
+			<label for="<?php echo $this->get_field_id('num_posts'); ?>">Số bài viết hiển thị:</label>
+			<input class="small-text" id="<?php echo $this->get_field_id('num_posts'); ?>"
+				name="<?php echo $this->get_field_name('num_posts'); ?>" type="number"
+				value="<?php echo esc_attr($num_posts); ?>" min="1" max="20">
+		</p>
+		<?php
+	}
+
+	function update($new_instance, $old_instance)
+	{
+		$instance = [];
+		$instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+		$instance['num_posts'] = (!empty($new_instance['num_posts'])) ? absint($new_instance['num_posts']) : 5;
+		return $instance;
+	}
+}
+
+// Đăng ký widget
+function register_latest_news_widget()
+{
+	register_widget('Latest_News_Widget');
+}
+add_action('widgets_init', 'register_latest_news_widget');

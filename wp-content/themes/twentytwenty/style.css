@@ -7829,60 +7829,134 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 
 /* CSS Test begin */
 .comment-style14-wrapper .comment-box {
-    margin-top: 30px !important;
+	margin-top: 30px !important;
 	margin: 40px;
 }
+
 /* CSS Test end */
 
 .comment-style14-wrapper .comment-box img {
-    width: 50px;
-    height: 50px;
+	width: 50px;
+	height: 50px;
 }
 
 .comment-style14-wrapper .comment-box .media-left {
-    padding-right: 10px;
-    width: 65px;
+	padding-right: 10px;
+	width: 65px;
 }
 
 .comment-style14-wrapper .comment-box .media-body p {
-    border: 1px solid #ddd;
-    padding: 10px;
+	border: 1px solid #ddd;
+	padding: 10px;
 }
 
 .comment-style14-wrapper .comment-box .media-body .media p {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 .comment-style14-wrapper .comment-box .media-heading {
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    padding: 7px 10px;
-    position: relative;
-    margin-bottom: -1px;
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	padding: 7px 10px;
+	position: relative;
+	margin-bottom: -1px;
 }
 
 .comment-style14-wrapper .comment-box .media-heading:before {
-    content: "";
-    width: 12px;
-    height: 12px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-width: 1px 0 0 1px;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-    position: absolute;
-    top: 10px;
-    left: -6px;
+	content: "";
+	width: 12px;
+	height: 12px;
+	background-color: #f5f5f5;
+	border: 1px solid #ddd;
+	border-width: 1px 0 0 1px;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	position: absolute;
+	top: 10px;
+	left: -6px;
 }
 
 /* Responsive cho nested replies */
 @media (max-width: 768px) {
-    .comment-style14-wrapper .comment-box .media {
-        margin-top: 15px;
-    }
-    
-    .comment-style14-wrapper .comment-box img {
-        width: 40px;
-        height: 40px;
-    }
+	.comment-style14-wrapper .comment-box .media {
+		margin-top: 15px;
+	}
+
+	.comment-style14-wrapper .comment-box img {
+		width: 40px;
+		height: 40px;
+	}
+}
+
+/* MODULE 15*/
+/* === Latest News Timeline Widget === */
+ul.timeline {
+	list-style-type: none;
+	position: relative;
+	padding-left: 30px;
+	margin: 0;
+}
+
+ul.timeline:before {
+	content: ' ';
+	background: #d4d9df;
+	display: inline-block;
+	position: absolute;
+	left: 29px;
+	width: 2px;
+	height: 100%;
+	z-index: 400;
+}
+
+ul.timeline>li {
+	margin: 20px 0;
+	padding-left: 20px;
+	position: relative;
+}
+
+ul.timeline>li:before {
+	content: ' ';
+	background: #fff;
+	display: inline-block;
+	position: absolute;
+	border-radius: 50%;
+	border: 3px solid #22c0e8;
+	left: -10px;
+	top: 10px;
+	width: 20px;
+	height: 20px;
+	z-index: 400;
+}
+
+ul.timeline a {
+	color: #007bff;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+ul.timeline a:hover {
+	text-decoration: underline;
+}
+
+ul.timeline p {
+	margin-top: 5px;
+	color: #444;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+ul.timeline a.float-right {
+	float: right;
+	font-weight: normal;
+	color: #007bff;
+	font-size: 14px;
+}
+
+/* Tùy chỉnh cho tiêu đề */
+.latest-news-widget h4,
+.widget_latest_news_widget h4,
+.widget-title {
+	font-weight: 700;
+	font-size: 1.3rem;
+	margin-bottom: 10px;
 }
