@@ -7538,7 +7538,7 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 .widget-recent .month {
 	font-size: 12px !important;
 	line-height: 1.2;
-	font-size: 14px ;
+	font-size: 14px;
 	margin-top: 0 !important;
 }
 
@@ -7729,4 +7729,89 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 .comment-item .item-content .item-title {
 	color: #05a4ed;
 	font-size: 13px;
+}
+
+/* Custom Search Form (giống Bootstrap snippet) */
+.search-form-custom {
+	background: #f5f5f5;
+	/* Nền nhạt như ảnh */
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden;
+	max-width: 500px;
+	margin: 0 auto;
+}
+
+.search-form-custom .card-body {
+	padding: 15px;
+	display: flex;
+	align-items: center;
+}
+
+.search-form-custom .form-control-borderless {
+	border: none;
+	padding: 10px 15px;
+	font-size: 16px;
+	background: transparent;
+	outline: none;
+	box-shadow: none;
+}
+
+.search-form-custom .form-control-borderless:focus {
+	border: none;
+	outline: none;
+	box-shadow: none;
+}
+
+.search-form-custom .btn-success {
+	background: #28a745;
+	/* Xanh lá như ảnh */
+	border: none;
+	padding: 10px 20px;
+	font-size: 16px;
+	border-radius: 0 5px 5px 0;
+	/* Bo góc phải nếu input bên trái */
+	color: #fff;
+	transition: background 0.3s;
+}
+
+.search-form-custom .btn-success:hover {
+	background: #218838;
+}
+
+.search-form-custom .fas.fa-search {
+	color: #999;
+	margin-right: 10px;
+	font-size: 18px;
+}
+
+/* Responsive cho form */
+@media (max-width: 768px) {
+	.search-form-custom .card-body {
+		flex-direction: column;
+	}
+
+	.search-form-custom .col-auto:first-child,
+	.search-form-custom .col {
+		margin-bottom: 10px;
+		width: 100%;
+	}
+}
+
+.search-wrapper {
+	margin: 18px auto;
+	padding: 45px 24px;
+	background: antiquewhite;
+	width: 919px;
+
+}
+
+.search-header h2{
+	color: red;
+	font-size: 32px;
+	
+}
+.search-header p{
+	color: #666;
+	    font-size: 20px;
 }

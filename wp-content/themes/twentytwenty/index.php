@@ -27,11 +27,47 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 				<div class="widget-categories">
 					<?php dynamic_sidebar('sidebar-11'); ?>
 				</div>
-		
+
 			<?php endif; ?>
 		</aside>
 
 		<div class="post-list">
+			<!-- Search Header -->
+			<?php if (is_search()): ?>
+				<div class="search-header" style="margin: 20px 0; text-align: center;">
+					<h2 >
+						Search: "<span><?php echo get_search_query(); ?></span>"
+					</h2>
+					<?php if (!have_posts()): ?>
+						<p style="color: #666;">We could not find any results for your search. You can try it again through the
+							form below.</p>
+						<div class="search-wrapper">
+							<div class="search-form-wrapper" >
+								<!-- Bootstrap-inspired search form (adapted from snippet) -->
+								<form class="card card-sm search-form-custom" role="search" method="get"
+									action="<?php echo home_url('/'); ?>">
+									<div class="card-body row no-gutters align-items-center">
+										<div class="col-auto">
+											<i class="fas fa-search h4 text-body"></i>
+										</div>
+										<!--end of col-->
+										<div class="col">
+											<input class="form-control form-control-lg form-control-borderless" type="search"
+												name="s" placeholder="Search topics or keywords"
+												value="<?php echo get_search_query(); ?>">
+										</div>
+										<!--end of col-->
+										<div class="col-auto">
+											<button class="btn btn-lg btn-success" type="submit">Search</button>
+										</div>
+										<!--end of col-->
+									</div>
+								</form>
+							</div>
+						</div>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
 
 			<?php if (have_posts()): ?>
 				<?php while (have_posts()):
@@ -92,8 +128,7 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 				</div>
 
 
-			<?php else: ?>
-				<p>Không có bài viết nào.</p>
+
 			<?php endif; ?>
 
 		</div>
@@ -104,16 +139,9 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 				<div class="widget-categories">
 					<?php dynamic_sidebar('sidebar-12'); ?>
 				</div>
-		
+
 			<?php endif; ?>
 		</aside>
 	</div> <!-- layout-wrapper -->
 
 </main>
-
-
-<?php get_template_part('template-parts/footer-menus-widgets'); ?>
-
-<?php
-get_footer();
-?>
