@@ -101,6 +101,15 @@ get_header();
 				</aside>
 			</div>
 
+			<!-- PHẦN DƯỚI 15 -->
+			<div class="search-footer">
+				<?php if (is_active_sidebar('sidebar-15')): ?>
+					<div class="widget-categories">
+						<?php dynamic_sidebar('sidebar-15'); ?>
+					</div>
+				<?php endif; ?>
+			</div>
+
 		</div> <!-- end layout-wrapper -->
 
 	<?php else: ?>
