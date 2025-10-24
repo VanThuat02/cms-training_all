@@ -528,6 +528,18 @@ function twentytwenty_sidebar_registration()
 		'after_title' => '</h3>',
 	));
 
+	//Module #14
+	register_sidebar(
+		array_merge(
+			$shared_args,
+			array(
+				'name' => __('Comments #14', 'twentytwenty'),
+				'id' => 'sidebar-14',
+				'description' => __('Widgets in this area will be displayed in the 14 column in the comment.', 'twentytwenty'),
+			)
+		)
+	);
+
 
 
 }
@@ -1591,4 +1603,126 @@ function register_page_list_widget()
 	register_widget('Page_List_Widget');
 }
 add_action('widgets_init', 'register_page_list_widget');
+
+
+
+// =======================
+// CUSTOM WIDGET: Comment LIST FOR SIDEBAR 14
+// =======================
+
+class Comment_Style14_Widget extends WP_Widget
+{
+    function __construct()
+    {
+        parent::__construct(
+            'comment_style14_widget',
+            __('Comments (Sidebar #14)', 'twentytwenty'),
+            ['description' => __('Hiển thị bình luận dạng khối có hỗ trợ trả lời (threaded).', 'twentytwenty')]
+        );
+    }
+
+    function widget($args, $instance)
+    {
+        echo $args['before_widget'];
+
+        $title = !empty($instance['title']) ? $instance['title'] : __('Bình luận mới', 'twentytwenty');
+        echo $args['before_title'] . esc_html($title) . $args['after_title'];
+
+        // Lấy bình luận cha (comment_depth = 1)
+        $comments = get_comments([
+            'number' => 10,
+            'status' => 'approve',
+            'post_status' => 'publish',
+            'parent' => 0,
+        ]);
+
+        if (!empty($comments)) {
+            echo '<div class="container comment-style14-wrapper">';
+            echo '<div class="row">';
+            foreach ($comments as $comment) {
+                $this->render_comment($comment);
+            }
+            echo '</div>';
+            echo '</div>';
+        } else {
+            echo '<p>Chưa có bình luận nào.</p>';
+        }
+
+        echo $args['after_widget'];
+    }
+
+    private function render_comment($comment, $is_top_level = true)
+    {
+        $avatar = get_avatar_url($comment->comment_author_email, ['size' => 50]);
+        $content = esc_html($comment->comment_content); // Full content như mockup
+        $author = esc_html($comment->comment_author);
+
+        if ($is_top_level) {
+            echo '<div class="media comment-box">';
+        } else {
+            echo '<div class="media">';
+        }
+
+        echo '<div class="media-left">';
+        echo '<a href="#">';
+        echo '<img class="img-responsive user-photo" src="' . esc_url($avatar) . '" alt="' . esc_attr($author) . '">';
+        echo '</a>';
+        echo '</div>';
+
+        echo '<div class="media-body">';
+        echo '<h4 class="media-heading">' . $author . '</h4>';
+        echo '<p>' . $content . '</p>';
+
+        // Lấy các reply (bình luận con)
+        $replies = get_comments([
+            'parent' => $comment->comment_ID,
+            'status' => 'approve',
+            'order' => 'ASC',
+        ]);
+
+        if ($replies) {
+            foreach ($replies as $reply) {
+                $this->render_comment($reply, false);
+            }
+        }
+
+        echo '</div>'; // media-body
+        echo '</div>'; // media
+    }
+
+    function form($instance)
+    {
+        $title = !empty($instance['title']) ? $instance['title'] : __('Bình luận mới', 'twentytwenty'); ?>
+        <p>
+            <label for="<?php echo $this->get_field_id('title'); ?>">Tiêu đề:</label>
+            <input class="widefat"
+                id="<?php echo $this->get_field_id('title'); ?>"
+                name="<?php echo $this->get_field_name('title'); ?>"
+                type="text"
+                value="<?php echo esc_attr($title); ?>">
+        </p>
+        <?php
+    }
+
+    function update($new_instance, $old_instance)
+    {
+        $instance = [];
+        $instance['title'] = (!empty($new_instance['title'])) ? strip_tags($new_instance['title']) : '';
+        return $instance;
+    }
+}
+
+function register_comment_style14_widget()
+{
+    register_widget('Comment_Style14_Widget');
+}
+add_action('widgets_init', 'register_comment_style14_widget');
+
+// Enqueue Bootstrap nếu chưa có (thêm vào functions.php của theme)
+function enqueue_bootstrap_for_comment_widget() {
+    wp_enqueue_style('bootstrap-css', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css');
+    wp_enqueue_script('jquery');
+    wp_enqueue_script('bootstrap-js', '//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js', array('jquery'), false, true);
+}
+add_action('wp_enqueue_scripts', 'enqueue_bootstrap_for_comment_widget');
 ?>

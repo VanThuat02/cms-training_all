@@ -91,7 +91,14 @@ get_header();
 						<p style="text-align:center;color:#666;">Không tìm thấy kết quả nào.</p>
 					<?php endif; ?>
 				</div>
-
+				<!-- CỘT PHẢI 14 -->
+				<aside class="sidebar-right">
+					<?php if (is_active_sidebar('sidebar-14')): ?>
+						<div class="widget-categories">
+							<?php dynamic_sidebar('sidebar-14'); ?>
+						</div>
+					<?php endif; ?>
+				</aside>
 			</div>
 
 		</div> <!-- end layout-wrapper -->
