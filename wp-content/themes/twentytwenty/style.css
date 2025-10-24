@@ -7806,12 +7806,17 @@ body:not(.overlay-header) .primary-menu>li>a:hover {
 
 }
 
-.search-header h2{
+.search-header h2 {
 	color: red;
 	font-size: 32px;
-	
+
 }
-.search-header p{
+
+.search-header p {
 	color: #666;
-	    font-size: 20px;
+	font-size: 20px;
+}
+
+.search-content {
+	display: grid;
 }
