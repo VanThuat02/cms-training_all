@@ -85,7 +85,7 @@ get_header();
 				</div>
 
 			</div>
-		
+
 		</div> <!-- end layout-wrapper -->
 
 	<?php else: ?>
@@ -151,3 +151,9 @@ get_header();
 	<?php endif; ?>
 
 </main>
+
+<?php get_template_part('template-parts/footer-menus-widgets'); ?>
+
+<?php
+get_footer();
+?>
