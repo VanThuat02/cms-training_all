@@ -945,6 +945,7 @@ function twentytwenty_child_enqueue_styles()
 	wp_enqueue_script('jquery');
 	// Enqueue Bootstrap JS
 	wp_enqueue_script('bootstrap-js', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), '4.0.0', true);
+	wp_enqueue_style('font-awesome-v5', 'https://use.fontawesome.com/releases/v5.1.0/css/all.css', array(), '5.1.0', 'all', array('crossorigin' => 'anonymous'));
 }
 add_action('wp_enqueue_scripts', 'twentytwenty_child_enqueue_styles');
 
