@@ -14,6 +14,7 @@
  * @since Twenty Twenty 1.0
  */
 
+
 get_header();
 $has_sidebar_11 = is_active_sidebar('sidebar-11');
 $has_sidebar_12 = is_active_sidebar('sidebar-12');
@@ -21,61 +22,56 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 
 <main id="site-content" class="site-main">
 	<div class="layout-wrapper">
-		<!-- CỘT TRÁI: Archive -->
+
+		<!-- CỘT TRÁI -->
 		<aside class="sidebar-left">
-			<?php if (is_active_sidebar('sidebar-11')): ?>
+			<?php if ($has_sidebar_11): ?>
 				<div class="widget-categories">
 					<?php dynamic_sidebar('sidebar-11'); ?>
 				</div>
-
 			<?php endif; ?>
 		</aside>
 
+		<!-- PHẦN CHÍNH -->
 		<div class="post-list">
+
 			<!-- Search Header -->
 			<?php if (is_search()): ?>
 				<div class="search-header" style="margin: 20px 0; text-align: center;">
-					<h2 >
+					<h2>
 						Search: "<span><?php echo get_search_query(); ?></span>"
 					</h2>
-					<?php if (!have_posts()): ?>
-						<p style="color: #666;">We could not find any results for your search. You can try it again through the
-							form below.</p>
-						<div class="search-wrapper">
-							<div class="search-form-wrapper" >
-								<!-- Bootstrap-inspired search form (adapted from snippet) -->
-								<form class="card card-sm search-form-custom" role="search" method="get"
-									action="<?php echo home_url('/'); ?>">
-									<div class="card-body row no-gutters align-items-center">
-										<div class="col-auto">
-											<i class="fas fa-search h4 text-body"></i>
-										</div>
-										<!--end of col-->
-										<div class="col">
-											<input class="form-control form-control-lg form-control-borderless" type="search"
-												name="s" placeholder="Search topics or keywords"
-												value="<?php echo get_search_query(); ?>">
-										</div>
-										<!--end of col-->
-										<div class="col-auto">
-											<button class="btn btn-lg btn-success" type="submit">Search</button>
-										</div>
-										<!--end of col-->
+
+					<p>We could not find any results for your search. You can try it again through the form below.</p>
+
+					<div class="search-wrapper">
+						<div class="search-form-wrapper">
+							<form class="card card-sm search-form-custom" role="search" method="get"
+								action="<?php echo home_url('/'); ?>">
+								<div class="card-body row no-gutters align-items-center">
+									<div class="col-auto">
+										<i class="fas fa-search h4 text-body"></i>
 									</div>
-								</form>
-							</div>
+									<div class="col">
+										<input class="form-control form-control-lg form-control-borderless" type="search"
+											name="s" placeholder="Search topics or keywords"
+											value="<?php echo get_search_query(); ?>">
+									</div>
+									<div class="col-auto">
+										<button class="btn btn-lg btn-success" type="submit">Search</button>
+									</div>
+								</div>
+							</form>
 						</div>
-					<?php endif; ?>
+					</div>
 				</div>
 			<?php endif; ?>
 
-			<?php if (have_posts()): ?>
-				<?php while (have_posts()):
-					the_post(); ?>
+			<!-- Danh sách bài viết -->
+			<?php if (have_posts() && !is_search()): ?>
+				<?php while (have_posts()): the_post(); ?>
 
 					<article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
-
-						<!-- Ảnh thumbnail -->
 						<div class="post-thumbnail">
 							<a href="<?php the_permalink(); ?>">
 								<?php
@@ -88,14 +84,12 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 							</a>
 						</div>
 
-						<!-- Cột ngày -->
 						<div class="post-date">
 							<span class="day"><?php echo get_the_date('d'); ?></span>
 							<span class="month"><?php echo strtoupper(get_the_date('M')); ?></span>
 							<span class="year"><?php echo get_the_date('Y'); ?></span>
 						</div>
 
-						<!-- Nội dung -->
 						<div class="post-content">
 							<div class="post-category"><?php the_category(', '); ?></div>
 
@@ -105,20 +99,17 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 
 							<div class="post-meta">
 								<span class="author">Bởi <?php the_author(); ?></span> |
-								<span
-									class="comments"><?php comments_number('0 bình luận', '1 bình luận', '% bình luận'); ?></span>
+								<span class="comments"><?php comments_number('0 bình luận', '1 bình luận', '% bình luận'); ?></span>
 							</div>
 
 							<div class="post-excerpt">
 								<?php the_excerpt(); ?>
 							</div>
 						</div>
-
 					</article>
 
 				<?php endwhile; ?>
 
-				<!-- Pagination -->
 				<div class="pagination">
 					<?php the_posts_pagination(array(
 						'mid_size' => 2,
@@ -126,22 +117,18 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 						'next_text' => __('Sau »'),
 					)); ?>
 				</div>
-
-
-
 			<?php endif; ?>
 
 		</div>
 
-		<!-- CỘT PHẢI: Coment -->
+		<!-- CỘT PHẢI -->
 		<aside class="sidebar-left">
-			<?php if (is_active_sidebar('sidebar-12')): ?>
+			<?php if ($has_sidebar_12): ?>
 				<div class="widget-categories">
 					<?php dynamic_sidebar('sidebar-12'); ?>
 				</div>
-
 			<?php endif; ?>
 		</aside>
-	</div> <!-- layout-wrapper -->
 
+	</div>
 </main>
