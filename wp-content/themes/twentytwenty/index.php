@@ -54,7 +54,7 @@ $has_sidebar_12 = is_active_sidebar('sidebar-12');
 										<div class="col">
 											<input class="form-control form-control-lg form-control-borderless" type="search"
 												name="s" placeholder="Search topics or keywords"
-												value="<?php echo get_search_query(); ?>">
+												value="<?php echo get_search_query(); ?>"><i class="fa-solid fa-magnifying-glass"></i>
 										</div>
 										<!--end of col-->
 										<div class="col-auto">
