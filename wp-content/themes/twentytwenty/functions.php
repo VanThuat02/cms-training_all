@@ -1497,4 +1497,9 @@ function register_recent_posts_sidebar_widget()
 	register_widget('Recent_Posts_Sidebar_Widget');
 }
 add_action('widgets_init', 'register_recent_posts_sidebar_widget');
+
+// Thay đổi tiêu đề trang web thành "Nhóm A"
+add_filter('pre_option_blogname', function($value) {
+    return "Nhóm A";
+});
 ?>
