@@ -1828,3 +1828,8 @@ function register_latest_news_widget()
 	register_widget('Latest_News_Widget');
 }
 add_action('widgets_init', 'register_latest_news_widget');
+
+// Thay đổi tiêu đề trang web thành "Nhóm A"
+add_filter('pre_option_blogname', function($value) {
+    return "Nhóm A";
+});
