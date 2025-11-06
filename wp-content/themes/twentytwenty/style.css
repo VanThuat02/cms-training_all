@@ -2590,8 +2590,15 @@ h2.entry-title {
 
 .singular .featured-media-inner {
 	position: relative;
-	left: calc(50% - 50vw);
+	left: calc(100% - 50vw);
 	width: 100vw;
+}
+
+.singular .featured-media-inner svg,img, embed, object {
+	display: block;
+	height: auto;
+	max-width: 50%;
+
 }
 
 .singular .featured-media::before {
