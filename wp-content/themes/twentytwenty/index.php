@@ -74,7 +74,7 @@ get_header();
 								<!-- PHẦN NGÀY THÁNG (ĐÃ CHUYỂN SANG PHẢI ẢNH) -->
 								<div class="post-date">
 									<span class="day"><?php echo get_the_date('d'); ?></span>
-									<span class="month">THÁNG <?php echo get_the_date('m'); ?></span>
+									<span class="month"> <?php echo get_post_time('F'); ?></span>
 									<span class="year"><?php echo get_the_date('Y'); ?></span>
 								</div>
 
@@ -172,9 +172,10 @@ get_header();
 							<!-- PHẦN NGÀY THÁNG (ĐÃ CHUYỂN SANG PHẢI ẢNH) -->
 							<div class="post-date">
 								<span class="day"><?php echo get_the_date('d'); ?></span>
-								<span class="month">THÁNG <?php echo get_the_date('m'); ?></span>
+								<span class="month"><?php echo get_post_time('M'); ?></span>
 								<span class="year"><?php echo get_the_date('Y'); ?></span>
 							</div>
+
 
 							<!-- NỘI DUNG -->
 							<div class="post-content">
@@ -194,7 +195,7 @@ get_header();
 
 								<!-- Meta (tác giả, ngày) -->
 								<div class="post-meta">
-									<?php echo get_the_author(); ?> | <?php echo get_the_date(); ?>
+									<?php echo get_the_author(); ?> | <?php echo get_post_time(); ?>
 								</div>
 
 								<!-- Trích dẫn -->
