@@ -989,12 +989,12 @@ function custom_posts_per_page($query)
 	if (!is_admin() && $query->is_main_query()) {
 		// Giới hạn cho trang chủ
 		if ($query->is_home()) {
-			$query->set('posts_per_page', 2);
+			$query->set('posts_per_page', 5);
 		}
 
 		// Giới hạn cho trang tìm kiếm
 		if ($query->is_search()) {
-			$query->set('posts_per_page', 2);
+			$query->set('posts_per_page', 5);
 		}
 	}
 }
@@ -1010,7 +1010,7 @@ add_filter('excerpt_length', 'custom_excerpt_length', 999);
 // Thêm "Xem thêm" vào excerpt
 function custom_excerpt_more($more)
 {
-	return '... <a class="read-more" href="' . get_permalink() . '">Xem thêm »</a>';
+	return '... <a class="read-more" href="' . get_permalink() . '">[...]</a>';
 }
 add_filter('excerpt_more', 'custom_excerpt_more');
 

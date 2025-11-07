@@ -58,6 +58,7 @@ get_header();
 						<?php while (have_posts()):
 							the_post(); ?>
 							<article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
+								<!-- ẢNH ĐẠI DIỆN -->
 								<div class="post-thumbnail">
 									<a href="<?php the_permalink(); ?>">
 										<?php
@@ -70,10 +71,35 @@ get_header();
 									</a>
 								</div>
 
+								<!-- PHẦN NGÀY THÁNG (ĐÃ CHUYỂN SANG PHẢI ẢNH) -->
+								<div class="post-date">
+									<span class="day"><?php echo get_the_date('d'); ?></span>
+									<span class="month">THÁNG <?php echo get_the_date('m'); ?></span>
+									<span class="year"><?php echo get_the_date('Y'); ?></span>
+								</div>
+
+								<!-- NỘI DUNG -->
 								<div class="post-content">
+									<!-- Category (nếu có) -->
+									<?php
+									$categories = get_the_category();
+									if (!empty($categories)): ?>
+										<div class="post-category">
+											<?php echo esc_html($categories[0]->name); ?>
+										</div>
+									<?php endif; ?>
+
+									<!-- Tiêu đề -->
 									<h2 class="post-title">
 										<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 									</h2>
+
+									<!-- Meta (tác giả, ngày) -->
+									<div class="post-meta">
+										<?php echo get_the_author(); ?> | <?php echo get_the_date(); ?>
+									</div>
+
+									<!-- Trích dẫn -->
 									<div class="post-excerpt">
 										<?php the_excerpt(); ?>
 									</div>
@@ -130,6 +156,7 @@ get_header();
 					<?php while (have_posts()):
 						the_post(); ?>
 						<article id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
+							<!-- ẢNH ĐẠI DIỆN -->
 							<div class="post-thumbnail">
 								<a href="<?php the_permalink(); ?>">
 									<?php
@@ -142,10 +169,35 @@ get_header();
 								</a>
 							</div>
 
+							<!-- PHẦN NGÀY THÁNG (ĐÃ CHUYỂN SANG PHẢI ẢNH) -->
+							<div class="post-date">
+								<span class="day"><?php echo get_the_date('d'); ?></span>
+								<span class="month">THÁNG <?php echo get_the_date('m'); ?></span>
+								<span class="year"><?php echo get_the_date('Y'); ?></span>
+							</div>
+
+							<!-- NỘI DUNG -->
 							<div class="post-content">
+								<!-- Category (nếu có) -->
+								<?php
+								$categories = get_the_category();
+								if (!empty($categories)): ?>
+									<div class="post-category">
+										<?php echo esc_html($categories[0]->name); ?>
+									</div>
+								<?php endif; ?>
+
+								<!-- Tiêu đề -->
 								<h2 class="post-title">
 									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
 								</h2>
+
+								<!-- Meta (tác giả, ngày) -->
+								<div class="post-meta">
+									<?php echo get_the_author(); ?> | <?php echo get_the_date(); ?>
+								</div>
+
+								<!-- Trích dẫn -->
 								<div class="post-excerpt">
 									<?php the_excerpt(); ?>
 								</div>
