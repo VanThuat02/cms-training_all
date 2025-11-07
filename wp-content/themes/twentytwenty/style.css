@@ -2590,14 +2590,17 @@ h2.entry-title {
 
 .singular .featured-media-inner {
 	position: relative;
-	left: calc(100% - 50vw);
+	left: calc(72% - 50vw);
 	width: 100vw;
 }
 
-.singular .featured-media-inner svg,img, embed, object {
+.singular .featured-media-inner svg,
+img,
+embed,
+object {
 	display: block;
 	height: auto;
-	max-width: 50%;
+	max-width: 100%;
 
 }
 
@@ -6826,21 +6829,51 @@ a.to-the-top>* {
 	gap: 20px;
 	border-bottom: 1px solid #eee;
 	padding: 20px 0;
+	position: relative;
 }
 
-/* Ảnh bên trái */
+/* FIX: Ảnh fill toàn bộ khung */
 .post-item .post-thumbnail {
 	flex: 0 0 280px;
+	order: 1;
+	display: block;
+	line-height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border-radius: 6px;
+	height: 180px;
+	/* THÊM: Cố định chiều cao khung */
+	position: relative;
+	/* THÊM: Để ảnh căn chỉnh tốt hơn */
+}
+
+.post-item .post-thumbnail a {
+	display: block;
+	line-height: 0;
+	text-decoration: none;
+	width: 100%;
+	/* THÊM: Chiếm toàn bộ width */
+	height: 100%;
+	/* THÊM: Chiếm toàn bộ height */
 }
 
 .post-item .post-thumbnail img {
 	width: 100%;
-	height: auto;
-	border-radius: 6px;
+	/* Đảm bảo chiếm full width */
+	height: 100%;
+	/* THÊM: Chiếm full height của khung */
 	object-fit: cover;
+	/* QUAN TRỌNG: Fill khung không méo */
+	object-position: center;
+	/* Căn giữa ảnh */
+	border-radius: 6px;
+	display: block;
+	margin: 0;
+	padding: 0;
 }
 
-/* Cột ngày */
+/* Ngày tháng bên phải ảnh */
 .post-item .post-date {
 	min-width: 80px;
 	text-align: center;
@@ -6848,6 +6881,9 @@ a.to-the-top>* {
 	font-weight: bold;
 	color: #0d47a1;
 	line-height: 1.2;
+	order: 2;
+	/* Ngày tháng nằm thứ hai */
+	padding: 0 15px;
 }
 
 .post-item .post-date .day {
@@ -6866,6 +6902,23 @@ a.to-the-top>* {
 /* Nội dung */
 .post-item .post-content {
 	flex: 1;
+	order: 3;
+	/* Nội dung nằm thứ ba */
+	padding-left: 15px;
+	position: relative;
+}
+
+/* Đường viền SOLID như trong ảnh mẫu */
+.post-item .post-content::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 0;
+	transform: translateY(-50%);
+	height: 80%;
+	width: 1px;
+	background: #ccc;
+	/* Solid line */
 }
 
 .post-item .post-category {
