@@ -1289,7 +1289,6 @@ if (!function_exists('display_recent_comments_sidebar')) {
 					$comment_excerpt = wp_trim_words(strip_tags($comment->comment_content), $excerpt_length / 4, '...'); // Trim words thay vì ký tự để tự nhiên hơn
 					?>
 					<div class="comment-item">
-						<span class="item-number"><?php echo $i; ?></span>
 						<div class="item-content">
 							<a href="<?php echo get_comment_link($comment); ?>"
 								class="item-title"><?php echo esc_html($comment_excerpt); ?></a>
