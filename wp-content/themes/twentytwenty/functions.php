@@ -1537,7 +1537,6 @@ add_action('widgets_init', 'register_recent_posts_sidebar_widget');
 
 // =======================
 // CUSTOM WIDGET: PAGE LIST FOR SIDEBAR 13
-// =======================
 class Page_List_Widget extends WP_Widget
 {
 
@@ -1620,8 +1619,6 @@ add_action('widgets_init', 'register_page_list_widget');
 
 // =======================
 // CUSTOM WIDGET: Comment LIST FOR SIDEBAR 14
-// =======================
-
 class Comment_Style14_Widget extends WP_Widget
 {
 	function __construct()
@@ -1775,7 +1772,7 @@ class Latest_News_Widget extends WP_Widget
 			foreach ($posts as $post) {
 				$post_link = get_permalink($post->ID);
 				$post_title = get_the_title($post->ID);
-				$post_date = get_the_date('j F, Y', $post->ID);
+				$post_date = get_post_time('j F, Y', $post->ID);
 				$post_excerpt = wp_trim_words(strip_tags(get_the_content(null, false, $post)), 25, '...');
 
 				echo '<li>';
